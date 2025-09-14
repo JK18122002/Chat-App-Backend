@@ -40,6 +40,11 @@ io.on("connection", (socket) => {
 app.use(express.json({ limit: "4mb" }));
 app.use(cors());
 
+// Root route (fixes "Cannot GET /")
+app.get("/", (req, res) => {
+  res.send("API is running...");
+});
+
 // Routes
 app.get("/api/status", (req, res) => res.send("Server is live"));
 app.use("/api/auth", userRouter);
@@ -51,5 +56,5 @@ await connectDB();
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`Server running on PORT: ${PORT}`));
 
-//Export
+// Export
 export default server;
